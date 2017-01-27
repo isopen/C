@@ -11,6 +11,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = testqrcode
 TEMPLATE = app
 
+CONFIG += c++11 qzxing_multimedia
+
 include(../qzxing/QZXing.pri)
 
 

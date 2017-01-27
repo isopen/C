@@ -81,7 +81,7 @@ Rectangle
         }
     }
 
-    /*QZXingFilter
+    QZXingFilter
     {
         id: zxingFilter
         captureRect: {
@@ -117,7 +117,7 @@ Rectangle
            framesDecoded++;
            console.log("frame finished: " + succeeded, decodeTime, timePerFrameDecode, framesDecoded);
         }
-    }*/
+    }
 
     Text
     {
