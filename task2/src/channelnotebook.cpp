@@ -166,7 +166,8 @@ void ChannelNoteBook::addCommand() {
 
 // search command
 void ChannelNoteBook::searchCommand() {
-  string s;
+  // TODO
+  /*string s;
   cout << "format:: u.name like '%ak%' and u.surname like 'Tyul%' or u.birthday = '1970-01-01' or h.hobby like '%oddi%' and a.address like '%22'\nEnter query: ";
   getline(cin, s);
   const char *sql = ("SELECT u.name, u.surname, u.birthday, a.name AS address, h.name AS hobby FROM conn_data AS cd\
@@ -178,7 +179,7 @@ void ChannelNoteBook::searchCommand() {
     cout << mysql_error(&this->conn) << "\n";
     return;
   }
-  parseResult();
+  parseResult();*/
 }
 
 // help - command
