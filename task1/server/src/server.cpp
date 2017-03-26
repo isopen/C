@@ -20,7 +20,7 @@ int Server::set_nonblock(int fd) {
 void Server::start() {
 
 	MasterSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-  set<int> SlaveSockets;
+	set<int> SlaveSockets;
 	struct sockaddr_in SockAddr;
 	SockAddr.sin_family = AF_INET;
 	SockAddr.sin_port = htons(PORT);
