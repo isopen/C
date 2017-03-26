@@ -22,6 +22,7 @@ using namespace std;
 class Server {
 
   private:
+    int EPoll;
     struct epoll_event Events[MAX_EVENTS];
     char Buffer[1024];
     int RecvResult;

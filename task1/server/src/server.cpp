@@ -21,17 +21,20 @@ void Server::start() {
 
 	MasterSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	set<int> SlaveSockets;
+
 	struct sockaddr_in SockAddr;
 	SockAddr.sin_family = AF_INET;
 	SockAddr.sin_port = htons(PORT);
 	SockAddr.sin_addr.s_addr = htonl(INADDR_ANY); // 0.0.0.0
+
 	bind(MasterSocket, (struct sockaddr *)(&SockAddr), sizeof(SockAddr));
 
 	set_nonblock(MasterSocket);
 
 	listen(MasterSocket, SOMAXCONN);
 
-	int EPoll = epoll_create1(0);
+	EPoll = epoll_create1(0);
+
 	struct epoll_event Event;
 	Event.data.fd = MasterSocket;
 	Event.events = EPOLLIN;
@@ -40,10 +43,10 @@ void Server::start() {
 	while(true) {
 		int n = epoll_wait(EPoll, Events, MAX_EVENTS, -1);
 		for(unsigned int i = 0; i < n; i++) {
-			if(Events[i].data.fd == MasterSocket) {
+			if(this->Events[i].data.fd == MasterSocket) {
 				open_socket();
 			}else {
-				RecvResult = recv(Events[i].data.fd, Buffer, 1024, MSG_NOSIGNAL);
+				RecvResult = recv(this->Events[i].data.fd, this->Buffer, 1024, MSG_NOSIGNAL);
 				if((RecvResult == 0) && (errno == EAGAIN)) {
 					close_socket(i);
 				}else if(RecvResult > 0) {
@@ -62,22 +65,22 @@ void Server::open_socket() {
   struct epoll_event Event;
   Event.data.fd = SlaveSocket;
   Event.events = EPOLLIN | EPOLLOUT;
-  epoll_ctl(EPoll, EPOLL_CTL_ADD, SlaveSocket, &Event);
+  epoll_ctl(this->EPoll, EPOLL_CTL_ADD, SlaveSocket, &Event);
 
 }
 
 void Server::close_socket(int i) {
 
-  shutdown(Events[i].data.fd, SHUT_RDWR);
-  close(Events[i].data.fd);
+  shutdown(this->Events[i].data.fd, SHUT_RDWR);
+  close(this->Events[i].data.fd);
 
 }
 
 void Server::send_to_all(int n, int i) {
 
   for(int j = 0; j < n; j++) {
-    if(Events[j].data.fd != Events[i].data.fd) {
-      send(Events[j].data.fd, Buffer, RecvResult, MSG_NOSIGNAL);
+    if(this->Events[j].data.fd != this->Events[i].data.fd) {
+      send(this->Events[j].data.fd, this->Buffer, this->RecvResult, MSG_NOSIGNAL);
     }
   }
 

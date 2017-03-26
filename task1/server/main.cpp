@@ -11,8 +11,8 @@ int main() {
     case -1: perror("fork");
              exit(1);
     case 0: setsid();
-            Server server;
-            server.start();
+            Server *server;
+            server->start();
   }
 
   return 0;
