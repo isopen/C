@@ -41,13 +41,13 @@ void Server::start() {
 		int n = epoll_wait(EPoll, Events, MAX_EVENTS, -1);
 		for(unsigned int i = 0; i < n; i++) {
 			if(Events[i].data.fd == MasterSocket) {
-      	open_socket();
+				open_socket();
 			}else {
 				RecvResult = recv(Events[i].data.fd, Buffer, 1024, MSG_NOSIGNAL);
 				if((RecvResult == 0) && (errno == EAGAIN)) {
-        	close_socket(i);
+					close_socket(i);
 				}else if(RecvResult > 0) {
-        	send_to_all(n, i);
+					send_to_all(n, i);
 				}
 			}
 		}
