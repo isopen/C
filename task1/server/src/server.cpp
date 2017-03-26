@@ -19,7 +19,7 @@ int Server::set_nonblock(int fd) {
 
 void Server::start() {
 
-	MasterSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	this->MasterSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	set<int> SlaveSockets;
 
 	struct sockaddr_in SockAddr;
@@ -27,29 +27,29 @@ void Server::start() {
 	SockAddr.sin_port = htons(PORT);
 	SockAddr.sin_addr.s_addr = htonl(INADDR_ANY); // 0.0.0.0
 
-	bind(MasterSocket, (struct sockaddr *)(&SockAddr), sizeof(SockAddr));
+	bind(this->MasterSocket, (struct sockaddr *)(&SockAddr), sizeof(SockAddr));
 
-	set_nonblock(MasterSocket);
+	set_nonblock(this->MasterSocket);
 
-	listen(MasterSocket, SOMAXCONN);
+	listen(this->MasterSocket, SOMAXCONN);
 
-	EPoll = epoll_create1(0);
+	this->EPoll = epoll_create1(0);
 
 	struct epoll_event Event;
-	Event.data.fd = MasterSocket;
+	Event.data.fd = this->MasterSocket;
 	Event.events = EPOLLIN;
 
-	epoll_ctl(EPoll, EPOLL_CTL_ADD, MasterSocket, &Event);
+	epoll_ctl(EPoll, EPOLL_CTL_ADD, this->MasterSocket, &Event);
 	while(true) {
-		int n = epoll_wait(EPoll, Events, MAX_EVENTS, -1);
+		int n = epoll_wait(this->EPoll, Events, MAX_EVENTS, -1);
 		for(unsigned int i = 0; i < n; i++) {
-			if(this->Events[i].data.fd == MasterSocket) {
+			if(this->Events[i].data.fd == this->MasterSocket) {
 				open_socket();
 			}else {
-				RecvResult = recv(this->Events[i].data.fd, this->Buffer, 1024, MSG_NOSIGNAL);
-				if((RecvResult == 0) && (errno == EAGAIN)) {
+				this->RecvResult = recv(this->Events[i].data.fd, this->Buffer, 1024, MSG_NOSIGNAL);
+				if((this->RecvResult == 0) && (errno == EAGAIN)) {
 					close_socket(i);
-				}else if(RecvResult > 0) {
+				}else if(this->RecvResult > 0) {
 					send_to_all(n, i);
 				}
 			}
@@ -60,7 +60,7 @@ void Server::start() {
 
 void Server::open_socket() {
 
-  int SlaveSocket = accept(MasterSocket, 0, 0);
+  int SlaveSocket = accept(this->MasterSocket, 0, 0);
   set_nonblock(SlaveSocket);
   struct epoll_event Event;
   Event.data.fd = SlaveSocket;
