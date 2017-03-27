@@ -43,14 +43,16 @@ void Server::start() {
 	while(true) {
 		int n = epoll_wait(this->EPoll, Events, MAX_EVENTS, -1);
 		for(unsigned int i = 0; i < n; i++) {
+			static char Buffer[BUFFER_SIZE];
 			if(this->Events[i].data.fd == this->MasterSocket) {
 				open_socket();
+				send_string_to_all(n, i, Buffer, ("online " + to_string(n) + "\n"));
 			}else {
-				this->RecvResult = recv(this->Events[i].data.fd, this->Buffer, 1024, MSG_NOSIGNAL);
+				this->RecvResult = recv(this->Events[i].data.fd, Buffer, BUFFER_SIZE, MSG_NOSIGNAL);
 				if((this->RecvResult == 0) && (errno == EAGAIN)) {
 					close_socket(i);
 				}else if(this->RecvResult > 0) {
-					send_to_all(n, i);
+					send_char_to_all(n, i, Buffer);
 				}
 			}
 		}
@@ -76,12 +78,19 @@ void Server::close_socket(int i) {
 
 }
 
-void Server::send_to_all(int n, int i) {
+void Server::send_char_to_all(int n, int i, char Buffer[BUFFER_SIZE]) {
 
   for(int j = 0; j < n; j++) {
     if(this->Events[j].data.fd != this->Events[i].data.fd) {
-      send(this->Events[j].data.fd, this->Buffer, this->RecvResult, MSG_NOSIGNAL);
+      send(this->Events[j].data.fd, Buffer, this->RecvResult, MSG_NOSIGNAL);
     }
   }
+
+}
+
+void Server::send_string_to_all(int n, int i, char Buffer[BUFFER_SIZE], string message) {
+
+	strncpy(Buffer, message.c_str(), message.size());
+	send_char_to_all(n, i, Buffer);
 
 }

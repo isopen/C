@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <set>
+#include <cstring>
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -10,12 +11,13 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/epoll.h>
+#include <string.h>
 
 #define MAX_EVENTS 32
 
 #define PORT 12345
 
-#define TIMEOUT_CLIENT 1
+#define BUFFER_SIZE 1024
 
 using namespace std;
 
@@ -24,13 +26,13 @@ class Server {
   private:
     int EPoll;
     struct epoll_event Events[MAX_EVENTS];
-    char Buffer[1024];
     int RecvResult;
     int MasterSocket;
     int set_nonblock(int fd);
     void open_socket();
     void close_socket(int i);
-    void send_to_all(int n, int i);
+    void send_char_to_all(int n, int i, char Buffer[BUFFER_SIZE]);
+    void send_string_to_all(int n, int i, char Buffer[BUFFER_SIZE], string message);
 
   public:
     Server();
