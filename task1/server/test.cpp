@@ -20,7 +20,7 @@ void client_handler() {
 	char buff[] = "PING";
 	send(s, buff, 4, MSG_NOSIGNAL);
   cout << to_string(rand()) + "\n";
-	/*while(true) {
+  /*while(true) {
     cout << rand();
   }*/
 }
@@ -32,6 +32,6 @@ int main(int argc, char **argv) {
     t1.join();
   }
 
-	return 0;
+  return 0;
 
 }
