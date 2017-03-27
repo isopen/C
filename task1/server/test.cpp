@@ -12,14 +12,14 @@ using namespace std;
 void client_handler(mutex &mtx) {
 
   int s = socket(AF_INET, SOCK_STREAM, 0);
-	struct sockaddr_in sa;
-	sa.sin_family = AF_INET;
-	sa.sin_port = htons(12345);
-	sa.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
-	connect(s, (struct sockaddr *) &sa, sizeof(sa));
+  struct sockaddr_in sa;
+  sa.sin_family = AF_INET;
+  sa.sin_port = htons(12345);
+  sa.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+  connect(s, (struct sockaddr *) &sa, sizeof(sa));
 
-	//char buff[] = "PING";
-	//send(s, buff, 4, MSG_NOSIGNAL);
+  //char buff[] = "PING";
+  //send(s, buff, 4, MSG_NOSIGNAL);
 
   while(true) {
     mtx.lock();
