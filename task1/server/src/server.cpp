@@ -80,6 +80,8 @@ void Server::close_socket(int i) {
   shutdown(this->Events[i].data.fd, SHUT_RDWR);
   close(this->Events[i].data.fd);
 
+	Log::Logging(("close_socket::" + to_string(this->Events[i].data.fd)));
+
 }
 
 void Server::send_char_to_all(int n, int i, char Buffer[BUFFER_SIZE]) {
