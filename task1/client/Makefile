@@ -1,6 +1,6 @@
 # variables
 CC = g++
-STD = -std=c++11
+STD = -std=c++11 -pthread
 NAME = dec
 
 HEADERS = src/clientchat.h
