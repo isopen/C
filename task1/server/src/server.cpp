@@ -80,7 +80,7 @@ void Server::close_socket(int i) {
   shutdown(this->Events[i].data.fd, SHUT_RDWR);
   close(this->Events[i].data.fd);
 
-	Log::logging(("close_socket::" + to_string(this->Events[i].data.fd)));
+  Log::logging(("close_socket::" + to_string(this->Events[i].data.fd)));
 
 }
 
