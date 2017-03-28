@@ -3,9 +3,9 @@ CC = g++
 STD = -std=c++11 -pthread
 NAME = dec
 
-HEADERS = src/clientchat.h
+HEADERS = src/client.h
 
-SOURCES = main.cpp src/clientchat.cpp
+SOURCES = main.cpp src/client.cpp
 
 # release:
 # make
