@@ -30,7 +30,6 @@ class Server {
     struct epoll_event Events[MAX_EVENTS];
     int RecvResult;
     int MasterSocket;
-    Log *l;
     int set_nonblock(int fd);
     void open_socket();
     void close_socket(int i);

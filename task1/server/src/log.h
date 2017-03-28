@@ -11,7 +11,7 @@ class Log {
   public:
     Log();
     ~Log();
-    void logging(string s);
+    static void logging(string s, bool active = true);
 };
 
 #endif
