@@ -19,6 +19,8 @@ int Server::set_nonblock(int fd) {
 
 void Server::start() {
 
+	l->logging("server::start");
+
 	this->MasterSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	set<int> SlaveSockets;
 

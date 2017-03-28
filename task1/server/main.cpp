@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unistd.h>
 #include "src/server.h"
+#include "src/log.h"
 
 using namespace std;
 

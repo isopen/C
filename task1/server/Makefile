@@ -4,10 +4,12 @@ STD = -std=c++11
 NAME = dec
 NAME_TEST = dectest
 
-HEADERS = src/server.h
+HEADERS = src/server.h \
+					src/log.h
 
 SOURCES = main.cpp \
-					src/server.cpp
+					src/server.cpp \
+					src/log.cpp
 
 # release:
 # make
