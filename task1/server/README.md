@@ -1,4 +1,4 @@
 <h3>Task 1: Chat-Server</h3>
-run ./start.sh<br>
-stop ./stop.sh<br>
+start: ./start.sh<br>
+stop: ./stop.sh<br>
 telnet 127.0.0.1 12345
