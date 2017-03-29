@@ -89,7 +89,7 @@ void Server::send_char_to_all(int n, int i, char Buffer[BUFFER_SIZE]) {
   for(int j = 0; j < n; j++) {
     if(this->Events[j].data.fd != this->Events[i].data.fd) {
       send(this->Events[j].data.fd, Buffer, this->RecvResult, MSG_NOSIGNAL);
-			Log::logging(("send_char_to_all::" + to_string(this->Events[j].data.fd) + "::" + string(Buffer)));
+		  Log::logging(("send_char_to_all::" + to_string(this->Events[j].data.fd) + "::" + string(Buffer)));
     }
   }
 
