@@ -1,4 +1,9 @@
 #!/bin/bash
 
 make -j 6
-./build/release/dec $1
+if [ -n $1 ]
+then
+  ./build/release/dec $1
+else
+  ./build/release/dec
+fi
