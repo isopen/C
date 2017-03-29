@@ -5,7 +5,12 @@
 
 using namespace std;
 
-int main() {
+int main(int argc, char *argv[]) {
+
+  if(string(argv[1]) == "stop") {
+    system("./stop.sh");
+    exit(0);
+  }
 
   bool deamon = false;
 
