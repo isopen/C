@@ -66,8 +66,8 @@ void Server::start() {
 			}else {
 				this->RecvResult = recv(this->Events[i].data.fd, Buffer, BUFFER_SIZE, MSG_NOSIGNAL);
 				if((this->RecvResult == 0) && (errno == EAGAIN)) {
-					close_socket(this->Events[i].data.fd);
 					send_string_to_all(n, i, Buffer, ("close " + to_string(n) + "\n"));
+					close_socket(this->Events[i].data.fd);
 				}else if(this->RecvResult > 0) {
 					send_char_to_all(n, i, Buffer);
 				}
