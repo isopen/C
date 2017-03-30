@@ -20,7 +20,7 @@ int Server::set_nonblock(int fd) {
 // init server
 bool Server::init() {
 
-	Log::logging("server::init");
+	Log::logging("server::init\n");
 
 	this->MasterSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
@@ -40,7 +40,7 @@ bool Server::init() {
 // start server
 void Server::start() {
 
-	Log::logging("server::start");
+	Log::logging("server::start\n");
 
 	set<int> SlaveSockets;
 
@@ -62,14 +62,14 @@ void Server::start() {
 		for(unsigned int i = 0; i < n; i++) {
 			static char Buffer[BUFFER_SIZE];
 			if(this->Events[i].data.fd == this->MasterSocket) {
-				Log::logging("number of descriptors::" + to_string(n));
+				Log::logging("number of descriptors::" + to_string(n) + "\n");
 				open_socket();
 				send_string_to_all(n, i, Buffer, ("online " + to_string(n) + "\n"));
 			}else {
 				this->RecvResult = recv(this->Events[i].data.fd, Buffer, BUFFER_SIZE, MSG_NOSIGNAL);
 				if((this->RecvResult == 0) && (errno == EAGAIN)) {
-					send_string_to_all(n, i, Buffer, ("close " + to_string(n) + "\n"));
 					close_socket(this->Events[i].data.fd);
+					send_string_to_all((n - 1), i, Buffer, ("close " + to_string(n) + "\n"));
 				}else if(this->RecvResult > 0) {
 					send_char_to_all(n, i, Buffer);
 				}
@@ -89,7 +89,7 @@ void Server::open_socket() {
   Event.events = EPOLLIN | EPOLLOUT;
   epoll_ctl(this->EPoll, EPOLL_CTL_ADD, SlaveSocket, &Event);
 
-  Log::logging(("open_socket::" + to_string(Event.data.fd)));
+  Log::logging(("open_socket::" + to_string(Event.data.fd) + "\n"));
 
 }
 
@@ -99,7 +99,7 @@ void Server::close_socket(int fd) {
   shutdown(fd, SHUT_RDWR);
   close(fd);
 
-  Log::logging(("close_socket::" + to_string(fd)));
+  Log::logging(("close_socket::" + to_string(fd) + "\n"));
 
 }
 
@@ -109,7 +109,7 @@ void Server::send_char_to_all(int n, int i, char Buffer[BUFFER_SIZE]) {
   for(int j = 0; j < n; j++) {
     if(this->Events[j].data.fd != this->Events[i].data.fd) {
       send(this->Events[j].data.fd, Buffer, this->RecvResult, MSG_NOSIGNAL);
-			Log::logging(("send_char_to_all::" + to_string(this->Events[j].data.fd) + "::" + string(Buffer)));
+			Log::logging(("send_char_to_all::" + to_string(this->Events[j].data.fd) + "::" + string(Buffer) + "\n"));
     }
   }
 
