@@ -17,6 +17,7 @@ int Server::set_nonblock(int fd) {
 	#endif
 }
 
+// init server
 bool Server::init() {
 
 	Log::logging("server::init");
@@ -36,6 +37,7 @@ bool Server::init() {
 
 }
 
+// start server
 void Server::start() {
 
 	Log::logging("server::start");
@@ -77,6 +79,7 @@ void Server::start() {
 
 }
 
+// open a server socket
 void Server::open_socket() {
 
   int SlaveSocket = accept(this->MasterSocket, 0, 0);
@@ -90,6 +93,7 @@ void Server::open_socket() {
 
 }
 
+// close a server socket
 void Server::close_socket(int fd) {
 
   shutdown(fd, SHUT_RDWR);
@@ -99,6 +103,7 @@ void Server::close_socket(int fd) {
 
 }
 
+// send clipboard to everyone
 void Server::send_char_to_all(int n, int i, char Buffer[BUFFER_SIZE]) {
 
   for(int j = 0; j < n; j++) {
@@ -110,6 +115,7 @@ void Server::send_char_to_all(int n, int i, char Buffer[BUFFER_SIZE]) {
 
 }
 
+// send string to everyone
 void Server::send_string_to_all(int n, int i, char Buffer[BUFFER_SIZE], string message) {
 
 	strncpy(Buffer, message.c_str(), message.size());
