@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  bool deamon = false;
+  bool deamon = true;
 
   if(deamon) {
 
