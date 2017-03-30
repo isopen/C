@@ -119,7 +119,7 @@ void Server::send_char_to_all(int n, int i, char Buffer[BUFFER_SIZE]) {
 			}
 			Log::logging("status_send::" + to_string(StatusSend) + "\n");
 		}
-  }
+ 	}
 
 }
 
