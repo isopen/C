@@ -17,19 +17,32 @@ int Server::set_nonblock(int fd) {
 	#endif
 }
 
+bool Server::init() {
+
+	Log::logging("server::init");
+
+	this->MasterSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+
+	this->SockAddr.sin_family = AF_INET;
+	this->SockAddr.sin_port = htons(PORT);
+	this->SockAddr.sin_addr.s_addr = htonl(INADDR_ANY); // 0.0.0.0
+
+	if(connect(this->MasterSocket, (struct sockaddr *)(&this->SockAddr), sizeof(this->SockAddr)) < 0) {
+		return true;
+	}else {
+		close_socket(this->MasterSocket);
+		return false;
+	}
+
+}
+
 void Server::start() {
 
 	Log::logging("server::start");
 
-	this->MasterSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	set<int> SlaveSockets;
 
-	struct sockaddr_in SockAddr;
-	SockAddr.sin_family = AF_INET;
-	SockAddr.sin_port = htons(PORT);
-	SockAddr.sin_addr.s_addr = htonl(INADDR_ANY); // 0.0.0.0
-
-	bind(this->MasterSocket, (struct sockaddr *)(&SockAddr), sizeof(SockAddr));
+	bind(this->MasterSocket, (struct sockaddr *)(&this->SockAddr), sizeof(this->SockAddr));
 
 	set_nonblock(this->MasterSocket);
 
@@ -47,12 +60,13 @@ void Server::start() {
 		for(unsigned int i = 0; i < n; i++) {
 			static char Buffer[BUFFER_SIZE];
 			if(this->Events[i].data.fd == this->MasterSocket) {
+				Log::logging("number of descriptors::" + to_string(n));
 				open_socket();
 				send_string_to_all(n, i, Buffer, ("online " + to_string(n) + "\n"));
 			}else {
 				this->RecvResult = recv(this->Events[i].data.fd, Buffer, BUFFER_SIZE, MSG_NOSIGNAL);
 				if((this->RecvResult == 0) && (errno == EAGAIN)) {
-					close_socket(i);
+					close_socket(this->Events[i].data.fd);
 					send_string_to_all(n, i, Buffer, ("close " + to_string(n) + "\n"));
 				}else if(this->RecvResult > 0) {
 					send_char_to_all(n, i, Buffer);
@@ -76,12 +90,12 @@ void Server::open_socket() {
 
 }
 
-void Server::close_socket(int i) {
+void Server::close_socket(int fd) {
 
-  shutdown(this->Events[i].data.fd, SHUT_RDWR);
-  close(this->Events[i].data.fd);
+  shutdown(fd, SHUT_RDWR);
+  close(fd);
 
-  Log::logging(("close_socket::" + to_string(this->Events[i].data.fd)));
+  Log::logging(("close_socket::" + to_string(fd)));
 
 }
 

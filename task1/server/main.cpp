@@ -5,6 +5,17 @@
 
 using namespace std;
 
+void server_start() {
+
+  Server server;
+  if(server.init()) {
+    server.start();
+  }else {
+    cout << "process exists\n";
+  }
+
+}
+
 int main(int argc, char *argv[]) {
 
   if(argc > 1) {
@@ -23,14 +34,12 @@ int main(int argc, char *argv[]) {
       case -1: perror("fork");
                exit(1);
       case 0: setsid();
-              Server server;
-              server.start();
+              server_start();
     }
 
   }else {
 
-    Server server;
-    server.start();
+    server_start();
 
   }
 
