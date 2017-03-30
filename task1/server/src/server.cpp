@@ -106,20 +106,7 @@ void Server::close_socket(int fd) {
 // send clipboard to everyone
 void Server::send_char_to_all(int n, int i, char Buffer[BUFFER_SIZE]) {
 
-	int StatusSend;
- 	for(int j = 0; j < n; j++) {
-		if(this->Events[j].data.fd != this->Events[i].data.fd) {
-			/*
-		 	 * > 0 - true
-		 	 * < 0 - (errno == EINTR)the socket call was interrupted or an error occurred
-		 	 * = 0 - the socket is closed
-			*/
-			if(StatusSend = send(this->Events[j].data.fd, Buffer, this->RecvResult, MSG_NOSIGNAL) > 0) {
-				Log::logging(("send_char_to_all::" + to_string(this->Events[j].data.fd) + "::" + string(Buffer)));
-			}
-			Log::logging("status_send::" + to_string(StatusSend) + "\n");
-		}
-  }
+
 
 }
 
