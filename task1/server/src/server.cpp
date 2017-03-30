@@ -107,8 +107,8 @@ void Server::close_socket(int fd) {
 void Server::send_char_to_all(int n, int i, char Buffer[BUFFER_SIZE]) {
 
 	int StatusSend;
-  	for(int j = 0; j < n; j++) {
-    	if(this->Events[j].data.fd != this->Events[i].data.fd) {
+  for(int j = 0; j < n; j++) {
+  	if(this->Events[j].data.fd != this->Events[i].data.fd) {
 			/*
 		 	 * > 0 - true
 		 	 * < 0 - (errno == EINTR)the socket call was interrupted or an error occurred
@@ -119,7 +119,7 @@ void Server::send_char_to_all(int n, int i, char Buffer[BUFFER_SIZE]) {
 			}
 			Log::logging("status_send::" + to_string(StatusSend) + "\n");
 		}
-  	}
+  }
 
 }
 
