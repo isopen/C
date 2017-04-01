@@ -1,0 +1,138 @@
+Sat Apr  1 20:09:30 2017
+server::init
+
+Sat Apr  1 20:09:30 2017
+server::start
+
+Sat Apr  1 20:09:35 2017
+number of descriptors::1
+
+Sat Apr  1 20:09:35 2017
+open_socket::5
+
+Sat Apr  1 20:09:46 2017
+number of descriptors::2
+
+Sat Apr  1 20:09:46 2017
+open_socket::6
+
+Sat Apr  1 20:09:46 2017
+send_char_to_all::5::online 2
+
+Sat Apr  1 20:09:46 2017
+status_send::1424
+
+Sat Apr  1 20:09:49 2017
+close_socket::6
+
+Sat Apr  1 20:09:49 2017
+status_send::0
+
+Sat Apr  1 20:09:56 2017
+number of descriptors::2
+
+Sat Apr  1 20:09:56 2017
+open_socket::6
+
+Sat Apr  1 20:09:56 2017
+send_char_to_all::5::online 2
+
+Sat Apr  1 20:09:56 2017
+status_send::1424
+
+Sat Apr  1 20:09:56 2017
+close_socket::5
+
+Sat Apr  1 20:09:56 2017
+status_send::0
+
+Sat Apr  1 20:10:11 2017
+number of descriptors::2
+
+Sat Apr  1 20:10:11 2017
+open_socket::5
+
+Sat Apr  1 20:10:11 2017
+send_char_to_all::6::online 2
+
+Sat Apr  1 20:10:11 2017
+status_send::1424
+
+Sat Apr  1 20:10:20 2017
+close_socket::6
+
+Sat Apr  1 20:10:20 2017
+status_send::0
+
+Sat Apr  1 20:10:51 2017
+close_socket::5
+
+Sat Apr  1 20:11:08 2017
+server::init
+
+Sat Apr  1 20:11:08 2017
+server::start
+
+Sat Apr  1 20:11:13 2017
+number of descriptors::1
+
+Sat Apr  1 20:11:13 2017
+open_socket::5
+
+Sat Apr  1 20:11:21 2017
+number of descriptors::2
+
+Sat Apr  1 20:11:21 2017
+open_socket::6
+
+Sat Apr  1 20:11:21 2017
+send_char_to_all::5::online 2
+
+Sat Apr  1 20:11:21 2017
+status_send::1424
+
+Sat Apr  1 20:11:23 2017
+close_socket::6
+
+Sat Apr  1 20:11:23 2017
+status_send::0
+
+Sat Apr  1 20:11:32 2017
+number of descriptors::2
+
+Sat Apr  1 20:11:32 2017
+open_socket::6
+
+Sat Apr  1 20:11:32 2017
+send_char_to_all::5::online 2
+
+Sat Apr  1 20:11:32 2017
+status_send::1424
+
+Sat Apr  1 20:11:34 2017
+close_socket::6
+
+Sat Apr  1 20:11:34 2017
+status_send::0
+
+Sat Apr  1 20:11:41 2017
+number of descriptors::2
+
+Sat Apr  1 20:11:41 2017
+open_socket::6
+
+Sat Apr  1 20:11:41 2017
+send_char_to_all::5::online 2
+
+Sat Apr  1 20:11:41 2017
+status_send::1424
+
+Sat Apr  1 20:11:43 2017
+close_socket::5
+
+Sat Apr  1 20:11:43 2017
+status_send::0
+
+Sat Apr  1 20:11:49 2017
+close_socket::6
+
