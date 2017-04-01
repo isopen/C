@@ -68,8 +68,8 @@ void Server::start() {
 			}else {
 				this->RecvResult = recv(this->Events[i].data.fd, Buffer, BUFFER_SIZE, MSG_NOSIGNAL);
 				if((this->RecvResult == 0) && (errno == EAGAIN)) {
-					send_string_to_all((n - 1), i, Buffer, ("close " + to_string(n) + "\n"));
 					close_socket(this->Events[i].data.fd);
+					send_string_to_all((n - 1), i, Buffer, ("close " + to_string(n) + "\n"));
 				}else if(this->RecvResult > 0) {
 					send_char_to_all(n, i, Buffer);
 				}
@@ -116,6 +116,8 @@ void Server::send_char_to_all(int n, int i, char Buffer[BUFFER_SIZE]) {
 			*/
 			if((StatusSend = send(this->Events[j].data.fd, Buffer, this->RecvResult, MSG_NOSIGNAL)) > 0) {
 				Log::logging(("send_char_to_all::" + to_string(this->Events[j].data.fd) + "::" + string(Buffer)));
+			}else if(StatusSend == 0) {
+				send(this->Events[j].data.fd, Buffer, (sizeof(Buffer) / sizeof(char)), MSG_NOSIGNAL);
 			}
 			Log::logging("status_send::" + to_string(StatusSend) + "\n");
 		}
